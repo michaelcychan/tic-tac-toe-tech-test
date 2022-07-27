@@ -19,6 +19,9 @@ class Game {
     (this.whoseTurn === this.playerO) ? this.board[x][y] = "O" : this.board[x][y] = "X";
     (this.whoseTurn === this.playerO) ? this.whoseTurn = this.playerX : this.whoseTurn = this.playerO
   }
+  completed() {
+    return false;
+  }
 }
 
 module.exports = Game;

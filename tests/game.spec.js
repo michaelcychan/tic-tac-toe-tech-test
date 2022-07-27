@@ -8,6 +8,7 @@ describe('Game', () => {
       const randomiserDouble = {pickPlayer: () => 0.5};
       const game = new Game(playerODouble, playerXDouble, randomiserDouble);
       expect(game.showBoard()).toStrictEqual([[null, null, null], [null, null, null], [null, null, null]]);
+      expect(game.completed()).toBe(false);
     });
     it('lets player 1 to be the first player for randomiser give a value equal or more than 0.5', () => {
       const playerODouble = {};
@@ -24,8 +25,8 @@ describe('Game', () => {
       expect(game.getWhoseTurn()).toBe(playerXDouble);
     });
   });
-  describe('first move', () => {
-    it('shows the board and next player correctly when player O places at 1,1', () => {
+  describe('first moves', () => {
+    it('shows the board and next player correctly when player O places at 0, 0', () => {
       const playerODouble = {place: () => (1,1)};
       const playerXDouble = {};
       const randomiserDouble = {pickPlayer: () => 0.5};
@@ -34,7 +35,43 @@ describe('Game', () => {
       expect(game.showBoard()).toStrictEqual([["O", null, null], [null, null, null], [null, null, null]]);
       expect(game.getWhoseTurn()).toBe(playerXDouble);
     });
-    
+    it('shows the board and next player correctly when two players played a round', () => {
+      const playerODouble = {place: () => (1,1)};
+      const playerXDouble = {};
+      const randomiserDouble = {pickPlayer: () => 0.5};
+      const game = new Game(playerODouble, playerXDouble, randomiserDouble);
+      game.place(0,0); // O
+      game.place(1,1); // X
+      expect(game.showBoard()).toStrictEqual([["O", null, null], [null, "X", null], [null, null, null]]);
+      expect(game.getWhoseTurn()).toBe(playerODouble);
+    });
+    it('shows the correct board after four rounds', () => {
+      const playerODouble = {place: () => (1,1)};
+      const playerXDouble = {};
+      const randomiserDouble = {pickPlayer: () => 0.5};
+      const game = new Game(playerODouble, playerXDouble, randomiserDouble);
+      game.place(0, 0); // O
+      game.place(1, 1); // X
+      game.place(0, 1); // O
+      game.place(1, 0); // X
+      expect(game.showBoard()).toStrictEqual([["O", "O", null], ["X", "X", null], [null, null, null]]);
+      expect(game.getWhoseTurn()).toBe(playerODouble);
+    });
+  });
+  describe('Game ending conditions', () => {
+    it('ends the game when all slots have been placed', () => {
+      const playerODouble = {place: () => (1,1)};
+      const playerXDouble = {};
+      const randomiserDouble = {pickPlayer: () => 0.5};
+      const game = new Game(playerODouble, playerXDouble, randomiserDouble);
+      game.place(0, 0); // O
+      game.place(1, 1); // X
+      game.place(0, 1); // O
+      game.place(1, 0); // X
+      // need to fill in more
 
+      expect(game.showBoard()).toStrictEqual([["O", "O", null], ["X", "X", null], [null, null, null]]);
+      expect(game.getWhoseTurn()).toBe(playerODouble);
+    })
   })
 })
