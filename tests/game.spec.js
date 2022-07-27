@@ -68,10 +68,14 @@ describe('Game', () => {
       game.place(1, 1); // X
       game.place(0, 1); // O
       game.place(1, 0); // X
-      // need to fill in more
-
-      expect(game.showBoard()).toStrictEqual([["O", "O", null], ["X", "X", null], [null, null, null]]);
-      expect(game.getWhoseTurn()).toBe(playerODouble);
+      game.place(1, 2); // O
+      game.place(0, 2); // X
+      game.place(2, 0); // O
+      game.place(2, 1); // X
+      game.place(2, 2); // O
+      expect(game.showBoard()).toStrictEqual([["O", "O", "X"], ["X", "X", "O"], ["O", "X", "O"]]);
+      expect(game.completed()).toBe(true);
+      expect(game.getWinner()).toBe(null);
     })
   })
 })

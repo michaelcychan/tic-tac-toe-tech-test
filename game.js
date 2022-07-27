@@ -20,7 +20,18 @@ class Game {
     (this.whoseTurn === this.playerO) ? this.whoseTurn = this.playerX : this.whoseTurn = this.playerO
   }
   completed() {
-    return false;
+    return this.#checkCompletion();
+  }
+  getWinner() {
+    return null;
+  }
+
+  #checkCompletion() {
+    let completion = false;
+    if (!this.board.flat().includes(null)) {
+      completion = true
+    }
+    return completion;
   }
 }
 
