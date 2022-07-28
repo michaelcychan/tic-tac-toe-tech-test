@@ -5,6 +5,7 @@ class Game {
     this.randomiser = randomiser;
     this.whoseTurn = this.whoFirst();
     this.board = [[null, null, null], [null, null, null], [null, null, null]]
+    this.winner = null;
   }
   showBoard() {
     return this.board;
@@ -23,11 +24,21 @@ class Game {
     return this.#checkCompletion();
   }
   getWinner() {
-    return null;
+    return this.winner;
   }
 
   #checkCompletion() {
     let completion = false;
+    this.board.forEach((rowArray) => {
+      if (rowArray.join('') === "OOO") {
+        completion = true;
+        this.winner = this.playerO;
+      }
+      if (rowArray.join('') === "XXX") {
+        completion = true;
+        this.winner = this.playerX;
+      }
+    })
     if (!this.board.flat().includes(null)) {
       completion = true
     }

@@ -56,6 +56,7 @@ describe('Game', () => {
       game.place(1, 0); // X
       expect(game.showBoard()).toStrictEqual([["O", "O", null], ["X", "X", null], [null, null, null]]);
       expect(game.getWhoseTurn()).toBe(playerODouble);
+      expect(game.completed()).toBe(false);
     });
   });
   describe('Game ending conditions', () => {
@@ -76,6 +77,20 @@ describe('Game', () => {
       expect(game.showBoard()).toStrictEqual([["O", "O", "X"], ["X", "X", "O"], ["O", "X", "O"]]);
       expect(game.completed()).toBe(true);
       expect(game.getWinner()).toBe(null);
-    })
+    });
+    it('ends the game when all slots have been placed', () => {
+      const playerODouble = {place: () => (1,1)};
+      const playerXDouble = {};
+      const randomiserDouble = {pickPlayer: () => 0.5};
+      const game = new Game(playerODouble, playerXDouble, randomiserDouble);
+      game.place(0, 0); // O
+      game.place(1, 1); // X
+      game.place(0, 1); // O
+      game.place(1, 0); // X
+      game.place(0, 2); // O
+      expect(game.showBoard()).toStrictEqual([["O", "O", "O"], ["X", "X", null], [null, null, null]]);
+      expect(game.completed()).toBe(true);
+      expect(game.getWinner()).toBe(playerODouble);
+    });
   })
 })
