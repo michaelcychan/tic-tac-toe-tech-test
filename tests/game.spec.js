@@ -5,7 +5,7 @@ describe('Game', () => {
     it('initialises with an empty board', () => {
       const playerODouble = {};
       const playerXDouble = {};
-      const randomiserDouble = {pickPlayer: () => 0.5};
+      const randomiserDouble = {pickPlayer: () => playerODouble};
       const game = new Game(playerODouble, playerXDouble, randomiserDouble);
       expect(game.showBoard()).toStrictEqual([[null, null, null], [null, null, null], [null, null, null]]);
       expect(game.completed()).toBe(false);
@@ -13,14 +13,14 @@ describe('Game', () => {
     it('lets player 1 to be the first player for randomiser give a value equal or more than 0.5', () => {
       const playerODouble = {};
       const playerXDouble = {};
-      const randomiserDouble = {pickPlayer: () => 0.5};
+      const randomiserDouble = {pickPlayer: () => playerODouble};
       const game = new Game(playerODouble, playerXDouble, randomiserDouble);
       expect(game.getWhoseTurn()).toBe(playerODouble);
     });
     it('lets player 2 to be the first player for randomiser give a value less than 0.5', () => {
       const playerODouble = {};
       const playerXDouble = {};
-      const randomiserDouble = {pickPlayer: () => 0.49};
+      const randomiserDouble = {pickPlayer: () => playerXDouble};
       const game = new Game(playerODouble, playerXDouble, randomiserDouble);
       expect(game.getWhoseTurn()).toBe(playerXDouble);
     });
@@ -29,7 +29,7 @@ describe('Game', () => {
     it('shows the board and next player correctly when player O places at 0, 0', () => {
       const playerODouble = {};
       const playerXDouble = {};
-      const randomiserDouble = {pickPlayer: () => 0.5};
+      const randomiserDouble = {pickPlayer: () => playerODouble};
       const game = new Game(playerODouble, playerXDouble, randomiserDouble);
       game.place(0,0);
       expect(game.showBoard()).toStrictEqual([["O", null, null], [null, null, null], [null, null, null]]);
@@ -38,7 +38,7 @@ describe('Game', () => {
     it('shows the board and next player correctly when two players played a round', () => {
       const playerODouble = {};
       const playerXDouble = {};
-      const randomiserDouble = {pickPlayer: () => 0.5};
+      const randomiserDouble = {pickPlayer: () => playerODouble};
       const game = new Game(playerODouble, playerXDouble, randomiserDouble);
       game.place(0,0); // O
       game.place(1,1); // X
@@ -48,7 +48,7 @@ describe('Game', () => {
     it('shows the correct board after four rounds', () => {
       const playerODouble = {};
       const playerXDouble = {};
-      const randomiserDouble = {pickPlayer: () => 0.5};
+      const randomiserDouble = {pickPlayer: () => playerODouble};
       const game = new Game(playerODouble, playerXDouble, randomiserDouble);
       game.place(0, 0); // O
       game.place(1, 1); // X
@@ -63,7 +63,7 @@ describe('Game', () => {
     it('ends the game when all slots have been placed', () => {
       const playerODouble = {};
       const playerXDouble = {};
-      const randomiserDouble = {pickPlayer: () => 0.5};
+      const randomiserDouble = {pickPlayer: () => playerODouble};
       const game = new Game(playerODouble, playerXDouble, randomiserDouble);
       game.place(0, 0); // O
       game.place(1, 1); // X
@@ -81,7 +81,7 @@ describe('Game', () => {
     it('ends the game when one player claims all fields in a row ', () => {
       const playerODouble = {};
       const playerXDouble = {};
-      const randomiserDouble = {pickPlayer: () => 0.5};
+      const randomiserDouble = {pickPlayer: () => playerODouble};
       const game = new Game(playerODouble, playerXDouble, randomiserDouble);
       game.place(0, 0); // O
       game.place(1, 1); // X
@@ -95,7 +95,7 @@ describe('Game', () => {
     it('ends the game when one player claims all fields in a column ', () => {
       const playerODouble = {};
       const playerXDouble = {};
-      const randomiserDouble = {pickPlayer: () => 0.5};
+      const randomiserDouble = {pickPlayer: () => playerODouble};
       const game = new Game(playerODouble, playerXDouble, randomiserDouble);
       game.place(0, 0); // O
       game.place(1, 1); // X
@@ -110,7 +110,7 @@ describe('Game', () => {
     it('ends the game when one player claims all fields in a diagonal ', () => {
       const playerODouble = {};
       const playerXDouble = {};
-      const randomiserDouble = {pickPlayer: () => 0.4};
+      const randomiserDouble = {pickPlayer: () => playerXDouble};
       const game = new Game(playerODouble, playerXDouble, randomiserDouble);
       game.place(1, 1); // X
       game.place(0, 1); // O
@@ -126,7 +126,7 @@ describe('Game', () => {
     it('throws an error if a player wants to claim a claimed spot', () => {
       const playerODouble = {};
       const playerXDouble = {};
-      const randomiserDouble = {pickPlayer: () => 0.4};
+      const randomiserDouble = {pickPlayer: () => playerXDouble};
       const game = new Game(playerODouble, playerXDouble, randomiserDouble);
       game.place(1, 1); // X
       expect(() => {game.place(1, 1)}).toThrow('Spot Taken'); // O
@@ -134,7 +134,7 @@ describe('Game', () => {
     it('allows players to continue player after throwing a Spot Taken Error', () => {
       const playerODouble = {};
       const playerXDouble = {};
-      const randomiserDouble = {pickPlayer: () => 0.4};
+      const randomiserDouble = {pickPlayer: () => playerXDouble};
       const game = new Game(playerODouble, playerXDouble, randomiserDouble);
       game.place(1, 1); // X
       expect(() => {game.place(1, 1)}).toThrow('Spot Taken'); // O

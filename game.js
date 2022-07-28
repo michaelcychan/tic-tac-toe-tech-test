@@ -14,7 +14,7 @@ class Game {
     return this.whoseTurn;
   }
   whoFirst(){
-    return (this.randomiser.pickPlayer() >= 0.5) ? this.playerO : this.playerX;
+    return (this.randomiser.pickPlayer(this.playerO, this.playerX));
   }
   place(x, y){
     if (this.board[x][y] != null) {
