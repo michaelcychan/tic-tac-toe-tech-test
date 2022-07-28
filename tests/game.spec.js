@@ -121,5 +121,25 @@ describe('Game', () => {
       expect(game.completed()).toBe(true);
       expect(game.getWinner()).toBe(playerXDouble);
     });
+  });
+  describe('edge cases', () => {
+    it('throws an error if a player wants to claim a claimed spot', () => {
+      const playerODouble = {};
+      const playerXDouble = {};
+      const randomiserDouble = {pickPlayer: () => 0.4};
+      const game = new Game(playerODouble, playerXDouble, randomiserDouble);
+      game.place(1, 1); // X
+      expect(() => {game.place(1, 1)}).toThrow('Spot Taken'); // O
+    });
+    it('allows players to continue player after throwing a Spot Taken Error', () => {
+      const playerODouble = {};
+      const playerXDouble = {};
+      const randomiserDouble = {pickPlayer: () => 0.4};
+      const game = new Game(playerODouble, playerXDouble, randomiserDouble);
+      game.place(1, 1); // X
+      expect(() => {game.place(1, 1)}).toThrow('Spot Taken'); // O
+      game.place(0, 0) //O
+      expect(game.showBoard()).toStrictEqual([["O", null, null], [null, "X", null], [null, null, null]]);
+    })
   })
 })
