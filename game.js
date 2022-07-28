@@ -7,15 +7,23 @@ class Game {
     this.board = [[null, null, null], [null, null, null], [null, null, null]]
     this.winner = null;
   }
+
+  // pass board to presentation module
   showBoard() {
     return this.board;
   }
+
+  // pass to presentation module
   getWhoseTurn() {
     return this.whoseTurn;
   }
+
+  // using a randomiser to pick who plays first
   whoFirst(){
     return (this.randomiser.pickPlayer(this.playerO, this.playerX));
   }
+
+  // main board program should check if the game completes first before allowing place()
   place(x, y){
     if (this.board[x][y] != null) {
       throw('Spot Taken')
@@ -24,13 +32,20 @@ class Game {
     (this.whoseTurn === this.playerO) ? this.whoseTurn = this.playerX : this.whoseTurn = this.playerO
     }
   }
+
+  // return true or false for if the game is completed.
   completed() {
     return this.#checkCompletion();
   }
+
+  // return the winner / or null for unfinished game or tie
   getWinner() {
     return this.winner;
   }
 
+  // private functions
+
+  // to calculate if there is a winner before every turn
   #checkWinning() {
     let checkingPattern = [];
 
@@ -55,6 +70,7 @@ class Game {
     }
   }
 
+  // check if the game ends
   #checkCompletion() {
     let completion = false;
     this.#checkWinning();

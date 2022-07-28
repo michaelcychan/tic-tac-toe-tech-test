@@ -4,11 +4,7 @@ class Randomiser {
     this.two = two;
   }
   pickPlayer () {
-    if (Math.random() >= 0.5) {
-      return this.one
-    } else {
-      return this.two
-    }
+    return (Math.random() >= 0.5) ? this.one : this.two
   }
 }
 
