@@ -10,14 +10,14 @@ describe('Game', () => {
       expect(game.showBoard()).toStrictEqual([[null, null, null], [null, null, null], [null, null, null]]);
       expect(game.completed()).toBe(false);
     });
-    it('lets player 1 to be the first player for randomiser give a value equal or more than 0.5', () => {
+    it('lets playerO to be the first player if randomiser returns playerO', () => {
       const playerODouble = {};
       const playerXDouble = {};
       const randomiserDouble = {pickPlayer: () => playerODouble};
       const game = new Game(playerODouble, playerXDouble, randomiserDouble);
       expect(game.getWhoseTurn()).toBe(playerODouble);
     });
-    it('lets player 2 to be the first player for randomiser give a value less than 0.5', () => {
+    it('lets playerX to be the first player if randomiser returns playerX', () => {
       const playerODouble = {};
       const playerXDouble = {};
       const randomiserDouble = {pickPlayer: () => playerXDouble};
