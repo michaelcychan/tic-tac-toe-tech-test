@@ -27,19 +27,65 @@ class Game {
     return this.winner;
   }
 
+  #checkWinning() {
+    let checkingPattern = [];
+
+    // row win - definite need refactoring
+    this.board.forEach((rowArray) => {
+      checkingPattern.push(rowArray.join('')) 
+    })
+
+    // horizontal win - need refactoring
+    for (let i = 0; i < this.board[0].length; i ++) {
+      checkingPattern.push(this.board[0][i] + this.board[1][i] + this.board[2][i]) 
+    }
+
+    // diagonal win
+    checkingPattern.push(this.board[0][2] + this.board[1][1] + this.board[2][0])
+    checkingPattern.push(this.board[0][0] + this.board[1][1] + this.board[2][2])
+
+    if (checkingPattern.includes("OOO")) {
+      this.winner = this.playerO;
+    } else if (checkingPattern.includes("XXX")) {
+      this.winner = this.playerX;
+    }
+    
+    // // row win - definite need refactoring
+    // this.board.forEach((rowArray) => {
+    //   if (rowArray.join('') === "OOO") {
+    //     this.winner = this.playerO;
+    //   }
+    //   if (rowArray.join('') === "XXX") {
+    //     this.winner = this.playerX;
+    //   }
+    // })
+
+    // // horizontal win - need refactoring
+    // for (let i = 0; i < this.board[0].length; i ++) {
+    //   if (this.board[0][i] + this.board[1][i] + this.board[2][i] === "OOO") {
+    //   this.winner = this.playerO;
+    //   }
+    //   if (this.board[0][i] + this.board[1][i] + this.board[2][i] === "XXX") {
+
+    //   this.winner = this.playerX;
+    //   }
+    // }
+
+    // // diagonal win
+    // if (this.board[0][2] + this.board[1][1] + this.board[2][0] === "OOO" || this.board[0][0] + this.board[1][1] + this.board[2][2] === "OOO") {
+    //   this.winner = this.playerO;
+    // }
+    // if (this.board[0][2] + this.board[1][1] + this.board[2][0] === "XXX" || this.board[0][0] + this.board[1][1] + this.board[2][2] === "XXX") {
+    //   this.winner = this.playerX;
+    // }
+  }
+
   #checkCompletion() {
     let completion = false;
-    this.board.forEach((rowArray) => {
-      if (rowArray.join('') === "OOO") {
-        completion = true;
-        this.winner = this.playerO;
-      }
-      if (rowArray.join('') === "XXX") {
-        completion = true;
-        this.winner = this.playerX;
-      }
-    })
-    if (!this.board.flat().includes(null)) {
+
+    this.#checkWinning();
+
+    if (!this.board.flat().includes(null) || this.winner != null) {
       completion = true
     }
     return completion;
